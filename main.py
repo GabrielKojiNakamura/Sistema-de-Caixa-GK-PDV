@@ -108,7 +108,6 @@ def finalizar_compra():
     ctk.CTkLabel(finalizar_compra_window, text="R$ SUB TOTAL",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=150)
     ctk.CTkLabel(finalizar_compra_window, text="R$ SUB TOTAL",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=150)
     ctk.CTkLabel(finalizar_compra_window, text="R$ TOTAL A PAGAR",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=870, y=150)
-    ctk.CTkLabel(finalizar_compra_window, text="R$ TROCO",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=550)
 
     #Label Valor
     valor_da_compra=ctk.CTkLabel(finalizar_compra_window, text=f"R$ {total_geral:.2f}",font=("Arial Bold",40),bg_color="white",text_color=cinza).place(x=920, y=250)
@@ -175,15 +174,28 @@ def finalizar_compra():
     btn_dinheiro = ctk.CTkButton(master=finalizar_compra_window, command=pagamento_dinheiro_window,text="DINHEIRO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
     btn_dinheiro.place(x=100, y=350)
 
+
+    def resetar_frame_right():
+        global total_geral, contador_itens
+
+        # Limpar todos os widgets dentro do frame_right
+        for widget in frame_right.winfo_children():
+            widget.destroy()
+
+        # Resetar as variáveis globais
+        total_geral = 0
+        contador_itens = 1
+
     #Pagamento em Máquininha
     def debito_finalizado():
         messagebox.showinfo("Sucesso", "Compra Finalizada em Débito")
         finalizar_compra_window.destroy()
+        resetar_frame_right()
 
     def credito_finalizado():
         messagebox.showinfo("Sucesso", "Compra Finalizada em Crédito")
         finalizar_compra_window.destroy()
-
+        resetar_frame_right()
 
     btn_debito = ctk.CTkButton(master=finalizar_compra_window,command=debito_finalizado,text="DEBITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
     btn_debito.place(x=450, y=350)
