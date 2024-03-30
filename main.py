@@ -184,37 +184,62 @@ entry_unitario.place(x=199, y=500)
 entry_total = ctk.CTkEntry(root, width=150, height=50, placeholder_text="Valor Total")
 entry_total.place(x=199, y=600)
 
+# Definir uma variável global para o contador de itens
+contador_itens = 1
+# Definir uma variável global para o total geral
+total_geral = 0
+
 def pesquisar_produto():
+    global contador_itens, total_geral  # Usar as variáveis globais contador_itens e total_geral
+
     codigo_produto = entry_barra_codigo.get()
 
     # Consultar o MongoDB para encontrar o produto pelo código
     produto_encontrado = collection.find_one({"codigo_produto": codigo_produto})
 
-    # Limpar o frame antes de exibir os detalhes do produto
-    for widget in frame_right.winfo_children():
-        widget.destroy()
-
-    # Exibir os detalhes do produto no frame
-    ctk.CTkLabel(master=frame_right, text="ID", font=("Arial", 18), bg_color=azul, text_color="white").place(x=80, y=30)
-    ctk.CTkLabel(master=frame_right, text="Descrição", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200, y=30)
-    ctk.CTkLabel(master=frame_right, text="Quantidade", font=("Arial", 18), bg_color=azul, text_color="white").place(x=420, y=30)
-    ctk.CTkLabel(master=frame_right, text="Valor Unitário", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580, y=30)
-    ctk.CTkLabel(master=frame_right, text="Imposto", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780, y=30)
-    ctk.CTkLabel(master=frame_right, text="R$", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=30)
-
     if produto_encontrado:
-        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['codigo_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=80,y=50)
-        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['nome_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200,y=50)
-        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['quantidade']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=420,y=50)
-        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['valor_unitario']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580,y=50)
-        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['imposto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780,y=50)
+        quantidade = int(entry_quantidade.get())  # Obtém a quantidade inserida na entry
+
+        # Exibir os detalhes do produto no frame
+        ctk.CTkLabel(master=frame_right, text="Item", font=("Arial", 18), bg_color=azul, text_color="white").place(x=80, y=30)
+        ctk.CTkLabel(master=frame_right, text="ID", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200, y=30)
+        ctk.CTkLabel(master=frame_right, text="Descrição", font=("Arial", 18), bg_color=azul, text_color="white").place(x=420, y=30)
+        ctk.CTkLabel(master=frame_right, text="Quantidade", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580, y=30)
+        ctk.CTkLabel(master=frame_right, text="Valor Unitário", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780, y=30)
+        ctk.CTkLabel(master=frame_right, text="Imposto", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=30)
+        ctk.CTkLabel(master=frame_right, text="R$", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1070, y=30)
+
+        y_coordinate = 0 + contador_itens * 50  # Definir a coordenada y baseada no número de itens já exibidos
+
+        # Formatar o número do item para exibição
+        numero_item_formatado = f"{contador_itens:03d}"
+        contador_itens += 1  # Incrementar o contador de itens
+
+        ctk.CTkLabel(master=frame_right, text=numero_item_formatado, font=("Arial", 18), bg_color=azul, text_color="white").place(x=80, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['codigo_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['nome_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=420, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, text=f"{quantidade}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, text=f"{float(produto_encontrado['valor_unitario'])}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, text=f"{float(produto_encontrado['imposto']) * quantidade:.2f}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=y_coordinate)
+        valor_total = float(produto_encontrado['valor_unitario']) * quantidade
+        ctk.CTkLabel(master=frame_right, text=f"{valor_total:.2f}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1070, y=y_coordinate)
+        
+        # Adicionar o valor total ao total geral
+        total_geral += valor_total
+
+        # Limpar o rótulo do total geral antes de exibir
+        for widget in frame_rightdown.winfo_children():
+            widget.destroy()
+
+        # Exibir o total geral
+        total_label = ctk.CTkLabel(master=frame_rightdown, text=f"R$ {total_geral:.2f}", font=("Arial Bold",50), bg_color=azul, text_color="white")
+        total_label.place(x=400, y=40)
+        ctk.CTkLabel(master=frame_rightdown, text="SUB TOTAL", font=("Arial Bold", 30), bg_color=azul, text_color="white").place(x=60, y=50) 
+
     else:
         # Exibir uma mensagem se nenhum produto for encontrado
-        for widget in frame_right.winfo_children():
-            widget.destroy()
-        ctk.CTkLabel(master=frame_right, text="Produto não encontrado", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580,y=50)
+        messagebox.showerror("Erro", "Produto não encontrado")
         
-
 # Botão de pesquisa
 btn_pesquisar = ctk.CTkButton(master=root, text="Pesquisar", command=pesquisar_produto, width=100, height=50, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
 btn_pesquisar.place(x=1570, y=200)
@@ -234,12 +259,14 @@ frame_right.place(x=500, y=400)
 
 
 #Label Dentro do Frame Right
-ctk.CTkLabel(master=frame_right, text="ID", font=("Arial", 18), bg_color=azul, text_color="white").place(x=80, y=30)
-ctk.CTkLabel(master=frame_right, text="Descrição", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200, y=30)
-ctk.CTkLabel(master=frame_right, text="Quantidade", font=("Arial", 18), bg_color=azul, text_color="white").place(x=420, y=30)
-ctk.CTkLabel(master=frame_right, text="Valor Unitário", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580, y=30)
-ctk.CTkLabel(master=frame_right, text="Imposto", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780, y=30)
-ctk.CTkLabel(master=frame_right, text="R$", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=30)
+ctk.CTkLabel(master=frame_right, text="Item", font=("Arial", 18), bg_color=azul, text_color="white").place(x=80, y=30)
+ctk.CTkLabel(master=frame_right, text="ID", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200, y=30)
+ctk.CTkLabel(master=frame_right, text="Descrição", font=("Arial", 18), bg_color=azul, text_color="white").place(x=320, y=30)
+ctk.CTkLabel(master=frame_right, text="Quantidade", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580, y=30)
+ctk.CTkLabel(master=frame_right, text="Valor Unitário", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780, y=30)
+ctk.CTkLabel(master=frame_right, text="Imposto", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=30)
+ctk.CTkLabel(master=frame_right, text="R$", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1070, y=30)
+
 
 
 
@@ -274,7 +301,6 @@ ctk.CTkLabel(master=frame_down, text="CUPOM ABERTO", font=("Arial Bold", 30), bg
 
 #Valor da Compra
 ctk.CTkLabel(master=frame_rightdown, text="R$", font=("Arial Bold", 50), bg_color=azul, text_color="white").place(x=400, y=40) 
-ctk.CTkLabel(master=frame_rightdown, text="XX,XX", font=("Arial Bold", 50), bg_color=azul, text_color="white").place(x=500, y=40) 
 
 # Função para fechar a janela de cadastro e restaurar a janela principal
 def voltar_pagina_anterior(cadastro_window):
