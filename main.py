@@ -110,7 +110,7 @@ def finalizar_compra():
     ctk.CTkLabel(finalizar_compra_window, text="R$ TOTAL A PAGAR",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=870, y=150)
     ctk.CTkLabel(finalizar_compra_window, text="R$ TROCO",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=550)
 
-    #Label Valor(Falta def)
+    #Label Valor
     valor_da_compra=ctk.CTkLabel(finalizar_compra_window, text=f"R$ {total_geral:.2f}",font=("Arial Bold",40),bg_color="white",text_color=cinza).place(x=920, y=250)
     
     def pagamento_dinheiro_window():
@@ -131,7 +131,6 @@ def finalizar_compra():
         entry_valor_recebido = ctk.CTkEntry(frame_dinheiro, placeholder_text="Digite o Valor", font=("Arial Bold",25), bg_color="white", fg_color=azul, width=300, height=20, corner_radius=20)
         entry_valor_recebido.place(x=50, y=220)
         
-
         # Função para calcular o troco
         def calcular_troco():
             try:
@@ -179,9 +178,12 @@ def finalizar_compra():
     #Pagamento em Máquininha
     def debito_finalizado():
         messagebox.showinfo("Sucesso", "Compra Finalizada em Débito")
+        finalizar_compra_window.destroy()
 
     def credito_finalizado():
         messagebox.showinfo("Sucesso", "Compra Finalizada em Crédito")
+        finalizar_compra_window.destroy()
+
 
     btn_debito = ctk.CTkButton(master=finalizar_compra_window,command=debito_finalizado,text="DEBITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
     btn_debito.place(x=450, y=350)
