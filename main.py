@@ -174,18 +174,6 @@ def finalizar_compra():
     btn_dinheiro = ctk.CTkButton(master=finalizar_compra_window, command=pagamento_dinheiro_window,text="DINHEIRO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
     btn_dinheiro.place(x=100, y=350)
 
-
-    def resetar_frame_right():
-        global total_geral, contador_itens
-
-        # Limpar todos os widgets dentro do frame_right
-        for widget in frame_right.winfo_children():
-            widget.destroy()
-
-        # Resetar as variáveis globais
-        total_geral = 0
-        contador_itens = 1
-
     #Pagamento em Máquininha
     def debito_finalizado():
         messagebox.showinfo("Sucesso", "Compra Finalizada em Débito")
@@ -432,7 +420,18 @@ def cadastro():
 btn_cadastro = ctk.CTkButton(master=frame_top, text="Cadastrar Produto", command=cadastro, width=100, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
 btn_cadastro.place(x=500, y=20)
 
-btn_cancelar = ctk.CTkButton(master=frame_top, text="Cancelar Compra", width=100, height=70, fg_color=azul,corner_radius=20,text_color="white",font=("Arial Bold",18))
+def resetar_frame_right():
+        global total_geral, contador_itens
+
+        # Limpar todos os widgets dentro do frame_right
+        for widget in frame_right.winfo_children():
+            widget.destroy()
+
+        # Resetar as variáveis globais
+        total_geral = 0
+        contador_itens = 1
+
+btn_cancelar = ctk.CTkButton(master=frame_top, text="Cancelar Compra", command=resetar_frame_right, width=100, height=70, fg_color=azul,corner_radius=20,text_color="white",font=("Arial Bold",18))
 btn_cancelar.place(x=800, y=20)
 
 btn_fechar = ctk.CTkButton(master=frame_top, text="Fechar Compra", command=finalizar_compra, width=100, height=70, fg_color=azul,corner_radius=20,text_color="white",font=("Arial Bold",18))
