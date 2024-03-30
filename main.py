@@ -108,7 +108,6 @@ def finalizar_compra():
     valor_da_compra=ctk.CTkLabel(finalizar_compra_window, text="XX,XX",font=("Arial Bold",40),bg_color="white",text_color=cinza).place(x=920, y=250)
     
 
-
     #Pagamento em Dinheiro
     def pagamento_dinheiro_window():
         pagamento_dinheiro_window=ctk.CTkToplevel(root,fg_color=azul)
@@ -116,10 +115,42 @@ def finalizar_compra():
         pagamento_dinheiro_window.grab_set()
 
         frame_dinheiro= ctk.CTkFrame(master=pagamento_dinheiro_window, width=400,height=500,fg_color="white", bg_color="white",corner_radius=50)
-        frame_dinheiro.place(x=210,y=100)
+        frame_dinheiro.place(x=210,y=100)   
+        
+        ctk.CTkLabel(frame_dinheiro, text="TOTAL A PAGAR: R$ ",font=("Arial Bold",18),text_color="black",bg_color="white").place(x=60, y=0)
+        
+        ctk.CTkLabel(frame_dinheiro, text="XX,XX",font=("Arial Bold",18),text_color="black",bg_color="white").place(x=80, y=0)
+       
+        ctk.CTkEntry(frame_dinheiro, placeholder_text="VALOR RECEBIDO:",font=("Arial Bold",18),text_color="black",bg_color="white").place(x=60, y=50)
+        
+        ctk.CTkEntry(frame_dinheiro, placeholder_text="Digite o Valor",font=("Arial Bold",18),bg_color=azul).place(x=60, y=80)
+        
+        ctk.CTkLabel(frame_dinheiro, text="TROCO A DAR: R$ ",font=("Arial Bold",18),text_color="black",bg_color="white").place(x=60, y=120)
+        
+        ctk.CTkLabel(frame_dinheiro, text="XX,XX",font=("Arial Bold",18),text_color="black",bg_color="white").place(x=60, y=150)
+        
+        btn_cancelar_dinheiro=ctk.CTkButton(master=frame_dinheiro, text="CANCELAR",font=("Arial Bold",18),text_color="black",fg_color=azul,width=250,height=70,corner_radius=20,)
+        btn_cancelar_dinheiro.place(x=60, y=170)
+
+        btn_confirmar_dinheiro=ctk.CTkButton(master=frame_dinheiro, text="CONFIRMAR",font=("Arial Bold",18),text_color="black",bg_color="white")
+        btn_confirmar_dinheiro.place(x=100, y=170)
+
+
+
+
+
+
+
 
     btn_dinheiro = ctk.CTkButton(master=finalizar_compra_window, command=pagamento_dinheiro_window,text="DINHEIRO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
     btn_dinheiro.place(x=100, y=350)
+
+
+
+
+
+
+
 
     #Pagamento em Débito
     btn_debito = ctk.CTkButton(master=finalizar_compra_window, text="DEBITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
