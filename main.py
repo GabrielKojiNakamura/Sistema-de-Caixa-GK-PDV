@@ -136,6 +136,10 @@ def finalizar_compra():
                 # Obter o valor recebido do usuário
                 valor_recebido = float(entry_valor_recebido.get())
 
+                if valor_recebido < total_geral:
+                    messagebox.showerror("Erro", "O valor recebido é menor que o total.")
+                    return
+
                 # Calcular o troco
                 troco = valor_recebido - total_geral
 
@@ -146,6 +150,7 @@ def finalizar_compra():
             except ValueError:
                 # Lidar com a entrada inválida
                 messagebox.showerror("Erro", "Por favor, insira um valor válido.")
+
             
         # Botão para calcular o troco
         btn_calcular_troco = ctk.CTkButton(master=frame_dinheiro, text="Calcular Troco", command=calcular_troco, font=("Arial Bold",18), text_color="black", fg_color=azul, width=200, height=20, corner_radius=20)
