@@ -90,27 +90,35 @@ label_horario.place(x=1600, y=170)
 # Iniciar a função para atualizar o horário
 atualizar_horario()
 
-    def finalizar_compra():
-        finalizar_compra_window = ctk.CTkToplevel(root, fg_color="white")
-        finalizar_compra_window.geometry("1200x700")
-        finalizar_compra_window.grab_set() 
+def finalizar_compra():
+    finalizar_compra_window = ctk.CTkToplevel(root, fg_color="white")
+    finalizar_compra_window.geometry("1200x700")
+    finalizar_compra_window.grab_set() 
         
-        #Frame Cadastro de Produto
-        frame_finalizar= ctk.CTkFrame(master=finalizar_compra_window, width=2000, height=100, fg_color=azul, bg_color=azul)
-        frame_finalizar.place(x=0, y=0)
-        
-        #Label
-        ctk.CTkLabel(finalizar_compra_window, text="R$ SUB TOTAL",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=150)
-        ctk.CTkLabel(finalizar_compra_window, text="R$ SUB TOTAL",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=150)
-        ctk.CTkLabel(finalizar_compra_window, text="R$ TOTAL A PAGAR",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=870, y=150)
-        ctk.CTkLabel(finalizar_compra_window, text="R$ TROCO",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=550)
+    #Frame Cadastro de Produto
+    frame_finalizar= ctk.CTkFrame(master=finalizar_compra_window, width=2000, height=100, fg_color=azul, bg_color=azul)
+    frame_finalizar.place(x=0, y=0)
 
-        #Label Valor(Falta def)
-        valor_da_compra=ctk.CTkLabel(finalizar_compra_window, text="XX,XX",font=("Arial Bold",40),bg_color="white",text_color=cinza).place(x=920, y=250)
+    #Botão para voltar
+    def voltar_pagina_anterior(finalizar_compra_window):
+        finalizar_compra_window.destroy()  # Fecha a janela de fechar caixa
+        root.deiconify()  # Restaura a janela principal
+
+    btn_voltar = ctk.CTkButton(master=frame_finalizar, text="Voltar à página anterior", command=lambda: voltar_pagina_anterior(finalizar_compra_window),width=100, height=70, fg_color=azul, text_color="white",font=("Arial Bold",18),corner_radius=20)
+    btn_voltar.place(x=100, y=20)
+
+    #Label
+    ctk.CTkLabel(finalizar_compra_window, text="R$ SUB TOTAL",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=150)
+    ctk.CTkLabel(finalizar_compra_window, text="R$ SUB TOTAL",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=150)
+    ctk.CTkLabel(finalizar_compra_window, text="R$ TOTAL A PAGAR",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=870, y=150)
+    ctk.CTkLabel(finalizar_compra_window, text="R$ TROCO",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=550)
+
+    #Label Valor(Falta def)
+    valor_da_compra=ctk.CTkLabel(finalizar_compra_window, text="XX,XX",font=("Arial Bold",40),bg_color="white",text_color=cinza).place(x=920, y=250)
     
     #Pagamento em Dinheiro
     def pagamento_dinheiro_window():
-        pagamento_dinheiro_window=ctk.CTkToplevel(root,fg_color=azul)
+        pagamento_dinheiro_window = ctk.CTkToplevel(root, fg_color=azul)
         pagamento_dinheiro_window.geometry("800x700")
         pagamento_dinheiro_window.grab_set()
 
@@ -130,32 +138,38 @@ atualizar_horario()
         ctk.CTkLabel(frame_dinheiro, text="TROCO A DAR: R$ ",font=("Arial Bold",25),text_color="black",bg_color="white").place(x=50, y=320)
         ctk.CTkLabel(frame_dinheiro, text="R$XX,XX",font=("Arial Bold",25),text_color=vermelho,bg_color="white").place(x=50, y=360)
         
+        #Voltar para área de pagamento
+        def voltar_pagamento():
+            pagamento_dinheiro_window.destroy()
+        
+        #Tela de Compra Finalizada em Dinheiro
+        def dinheiro_finalizada():
+            pagamento_dinheiro_window.destroy()
+            messagebox.showinfo("Sucesso", "Compra Finalizada em Dinheiro")
+
         #Botões Cancelar/Confirmar
-        btn_cancelar_dinheiro=ctk.CTkButton(master=frame_dinheiro, text="CANCELAR",font=("Arial Bold",18),text_color="black",fg_color=vermelho,width=100,height=20,corner_radius=20,)
+        btn_cancelar_dinheiro=ctk.CTkButton(master=frame_dinheiro, text="CANCELAR",command=voltar_pagamento, font=("Arial Bold",18),text_color="black",fg_color=vermelho,width=100,height=20,corner_radius=20,)
         btn_cancelar_dinheiro.place(x=50, y=450)
 
-        btn_confirmar_dinheiro=ctk.CTkButton(master=frame_dinheiro, text="CONFIRMAR",font=("Arial Bold",18),text_color="black",fg_color=verde,width=100,height=20,corner_radius=20)
+        btn_confirmar_dinheiro=ctk.CTkButton(master=frame_dinheiro, text="CONFIRMAR",command=dinheiro_finalizada,font=("Arial Bold",18),text_color="black",fg_color=verde,width=100,height=20,corner_radius=20)
         btn_confirmar_dinheiro.place(x=220, y=450)
 
+    #Pagamento em Dinheiro
     btn_dinheiro = ctk.CTkButton(master=finalizar_compra_window, command=pagamento_dinheiro_window,text="DINHEIRO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
     btn_dinheiro.place(x=100, y=350)
 
-    #Pagamento em Débito
-    btn_debito = ctk.CTkButton(master=finalizar_compra_window, text="DEBITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
+    #Pagamento em Máquininha
+    def debito_finalizado():
+        messagebox.showinfo("Sucesso", "Compra Finalizada em Débito")
+
+    def credito_finalizado():
+        messagebox.showinfo("Sucesso", "Compra Finalizada em Crédito")
+
+    btn_debito = ctk.CTkButton(master=finalizar_compra_window,command=debito_finalizado,text="DEBITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
     btn_debito.place(x=450, y=350)
 
-    #Pagamento em Crédito
-    btn_credito = ctk.CTkButton(master=finalizar_compra_window, text="CRÉDITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
+    btn_credito = ctk.CTkButton(master=finalizar_compra_window,command=credito_finalizado, text="CRÉDITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
     btn_credito.place(x=800, y=350)
-
-
-    #Botão para voltar
-    def voltar_pagina_anterior(finalizar_compra_window):
-        finalizar_compra_window.destroy()  # Fecha a janela de fechar caixa
-        root.deiconify()  # Restaura a janela principal
-
-    btn_voltar = ctk.CTkButton(master=frame_finalizar, text="Voltar à página anterior", command=lambda: voltar_pagina_anterior(finalizar_compra_window),width=100, height=70, fg_color=azul, text_color="white",font=("Arial Bold",18),corner_radius=20)
-    btn_voltar.place(x=100, y=20)
 
 # Código e Descrição
 entry_barra_codigo = ctk.CTkEntry(root, width=1370, height=50, placeholder_text="Código/Descrição")
@@ -201,9 +215,7 @@ def pesquisar_produto():
 btn_pesquisar = ctk.CTkButton(master=root, text="Pesquisar", command=pesquisar_produto, width=100, height=50, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
 btn_pesquisar.place(x=1570, y=200)
 
-
 # Frames
-
 frame_top= ctk.CTkFrame(master=root, width=2000, height=100, fg_color=azul)
 frame_top.place(x=0, y=0)
 
@@ -271,7 +283,6 @@ def cadastro():
             messagebox.showerror("Erro", "Preencha todos os campos antes de salvar!")
 
     #Frame Cadastro de Produto
-
     frame_topcadastro= ctk.CTkFrame(master=cadastro_window, width=2000, height=100, fg_color=azul)
     frame_topcadastro.place(x=0, y=0)
 
