@@ -111,30 +111,51 @@ def finalizar_compra():
     ctk.CTkLabel(finalizar_compra_window, text="R$ TROCO",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=550)
 
     #Label Valor(Falta def)
-    valor_da_compra=ctk.CTkLabel(finalizar_compra_window, text="XX,XX",font=("Arial Bold",40),bg_color="white",text_color=cinza).place(x=920, y=250)
+    valor_da_compra=ctk.CTkLabel(finalizar_compra_window, text=f"R$ {total_geral:.2f}",font=("Arial Bold",40),bg_color="white",text_color=cinza).place(x=920, y=250)
     
-    #Pagamento em Dinheiro
     def pagamento_dinheiro_window():
         pagamento_dinheiro_window = ctk.CTkToplevel(root, fg_color=azul)
         pagamento_dinheiro_window.geometry("800x700")
         pagamento_dinheiro_window.grab_set()
 
         #Frame Central
-        frame_dinheiro= ctk.CTkFrame(master=pagamento_dinheiro_window, width=400,height=500,fg_color="white", bg_color="white",corner_radius=50)
-        frame_dinheiro.place(x=210,y=100)   
+        frame_dinheiro = ctk.CTkFrame(master=pagamento_dinheiro_window, width=400, height=500, fg_color="white", bg_color="white", corner_radius=50)
+        frame_dinheiro.place(x=210, y=100)   
         
         #Total a Pagar
-        ctk.CTkLabel(frame_dinheiro, text="TOTAL A PAGAR:",font=("Arial Bold",25),text_color="black",bg_color="white").place(x=50, y=50)
-        ctk.CTkLabel(frame_dinheiro, text="R$XX,XX",font=("Arial Bold",25),text_color="black",bg_color="white").place(x=50, y=90)
-       
+        ctk.CTkLabel(frame_dinheiro, text="TOTAL A PAGAR:", font=("Arial Bold",25), text_color="black", bg_color="white").place(x=50, y=50)
+        ctk.CTkLabel(frame_dinheiro, text=f"R${total_geral:.2f}", font=("Arial Bold",25), text_color="black", bg_color="white").place(x=50, y=90)
+    
         #Valor Recebido
-        ctk.CTkLabel(frame_dinheiro, text="VALOR RECEBIDO:",font=("Arial Bold",25),text_color="black",bg_color="white").place(x=50, y=180)
-        ctk.CTkEntry(frame_dinheiro, placeholder_text="Digite o Valor",font=("Arial Bold",25),bg_color="white",fg_color=azul,width=300,height=20,corner_radius=20).place(x=50, y=220)
+        ctk.CTkLabel(frame_dinheiro, text="VALOR RECEBIDO:", font=("Arial Bold",25), text_color="black", bg_color="white").place(x=50, y=180)
+        entry_valor_recebido = ctk.CTkEntry(frame_dinheiro, placeholder_text="Digite o Valor", font=("Arial Bold",25), bg_color="white", fg_color=azul, width=300, height=20, corner_radius=20)
+        entry_valor_recebido.place(x=50, y=220)
+        
+
+        # Função para calcular o troco
+        def calcular_troco():
+            try:
+                # Obter o valor recebido do usuário
+                valor_recebido = float(entry_valor_recebido.get())
+
+                # Calcular o troco
+                troco = valor_recebido - total_geral
+
+                # Exibir o troco
+                label_troco = ctk.CTkLabel(frame_dinheiro, text=f"R$ {troco:.2f}", font=("Arial Bold", 25), bg_color="white", text_color=vermelho)
+                label_troco.place(x=250, y=320)
+
+            except ValueError:
+                # Lidar com a entrada inválida
+                messagebox.showerror("Erro", "Por favor, insira um valor válido.")
+            
+        # Botão para calcular o troco
+        btn_calcular_troco = ctk.CTkButton(master=frame_dinheiro, text="Calcular Troco", command=calcular_troco, font=("Arial Bold",18), text_color="black", fg_color=azul, width=200, height=20, corner_radius=20)
+        btn_calcular_troco.place(x=50, y=270)
         
         #Troco a Dar
-        ctk.CTkLabel(frame_dinheiro, text="TROCO A DAR: R$ ",font=("Arial Bold",25),text_color="black",bg_color="white").place(x=50, y=320)
-        ctk.CTkLabel(frame_dinheiro, text="R$XX,XX",font=("Arial Bold",25),text_color=vermelho,bg_color="white").place(x=50, y=360)
-        
+        ctk.CTkLabel(frame_dinheiro, text="TROCO A DAR: ", font=("Arial Bold",25), text_color="black", bg_color="white").place(x=50, y=320)
+
         #Voltar para área de pagamento
         def voltar_pagamento():
             pagamento_dinheiro_window.destroy()
@@ -266,10 +287,6 @@ ctk.CTkLabel(master=frame_right, text="Quantidade", font=("Arial", 18), bg_color
 ctk.CTkLabel(master=frame_right, text="Valor Unitário", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780, y=30)
 ctk.CTkLabel(master=frame_right, text="Imposto", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=30)
 ctk.CTkLabel(master=frame_right, text="R$", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1070, y=30)
-
-
-
-
 
 # Logo
 logo_image = Image.open("./Logo 2.png")
@@ -406,13 +423,5 @@ btn_cancelar.place(x=800, y=20)
 
 btn_fechar = ctk.CTkButton(master=frame_top, text="Fechar Compra", command=finalizar_compra, width=100, height=70, fg_color=azul,corner_radius=20,text_color="white",font=("Arial Bold",18))
 btn_fechar.place(x=1100, y=20)
-
-
-
-
-
-
-
-
 
 root.mainloop()  # Executa o loop principal
