@@ -234,16 +234,32 @@ logo = ImageTk.PhotoImage(logo_image.resize((192, 100)))
 ctk.CTkLabel(master=frame_top, text=None, image=logo, bg_color=azul).place(x=40, y=0)
 
 # Labels Root Principal
+#Informações
 ctk.CTkLabel(master=frame_top, text="Suporte (11) 99999-9999", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1600, y=40)
-ctk.CTkLabel(root, text="Código/Descrição", font=("Arial", 18), bg_color="white", text_color="gray").place(x=199, y=170)
-ctk.CTkLabel(root, text="Quantidade", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=370)
-ctk.CTkLabel(root, text="Valor Unitário", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=470)
-ctk.CTkLabel(root, text="Valor Total", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=570)
 ctk.CTkLabel(root, text="Você está sendo atendido por: xxxxxxx", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=260)
 ctk.CTkLabel(master=frame_down, text="AVISO", font=("Arial Bold", 30), bg_color=azul, text_color="white").place(x=60, y=50) 
-ctk.CTkLabel(master=frame_down, text="CAIXA ABERTO", font=("Arial Bold", 30), bg_color=azul, text_color="white").place(x=200, y=50) 
 ctk.CTkLabel(master=frame_rightdown, text="SUB TOTAL", font=("Arial Bold", 30), bg_color=azul, text_color="white").place(x=60, y=50) 
+
+#Código
+ctk.CTkLabel(root, text="Código/Descrição", font=("Arial", 18), bg_color="white", text_color="gray").place(x=199, y=170)
+
+#Quantidade
+ctk.CTkLabel(root, text="Quantidade", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=370)
+
+#Valor Unitário
+ctk.CTkLabel(root, text="Valor Unitário", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=470)
+
+#Valor Total
+ctk.CTkLabel(root, text="Valor Total", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=570)
+
+#Caixa Aberto/Cupom Aberto
+ctk.CTkLabel(master=frame_down, text="CAIXA ABERTO", font=("Arial Bold", 30), bg_color=azul, text_color="white").place(x=200, y=50) 
+ctk.CTkLabel(master=frame_down, text="CUPOM ABERTO", font=("Arial Bold", 30), bg_color=azul, text_color="white").place(x=200, y=50) 
+
+#Valor da Compra
 ctk.CTkLabel(master=frame_rightdown, text="R$", font=("Arial Bold", 50), bg_color=azul, text_color="white").place(x=400, y=40) 
+ctk.CTkLabel(master=frame_rightdown, text="XX,XX", font=("Arial Bold", 50), bg_color=azul, text_color="white").place(x=500, y=40) 
+
 
 # Função para fechar a janela de cadastro e restaurar a janela principal
 def voltar_pagina_anterior(cadastro_window):
