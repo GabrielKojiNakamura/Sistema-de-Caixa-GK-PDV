@@ -6,10 +6,7 @@ import datetime
 from pymongo import MongoClient
 
 # Criar conexão com o MongoDB
-uri = "mongodb+srv://Gabriel:<password>@cluster0.brk82ev.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-
-
-uri = uri.replace("<password>", "wzw5brC7z7Hyn6o9")
+uri = "mongodb+srv://Gabriel:wzw5brC7z7Hyn6o9@cluster0.brk82ev.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 client = MongoClient(uri)
 db = client['Cluster0']  
@@ -193,23 +190,30 @@ def pesquisar_produto():
     # Consultar o MongoDB para encontrar o produto pelo código
     produto_encontrado = collection.find_one({"codigo_produto": codigo_produto})
 
+    # Limpar o frame antes de exibir os detalhes do produto
+    for widget in frame_right.winfo_children():
+        widget.destroy()
+
+    # Exibir os detalhes do produto no frame
+    ctk.CTkLabel(master=frame_right, text="ID", font=("Arial", 18), bg_color=azul, text_color="white").place(x=80, y=30)
+    ctk.CTkLabel(master=frame_right, text="Descrição", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200, y=30)
+    ctk.CTkLabel(master=frame_right, text="Quantidade", font=("Arial", 18), bg_color=azul, text_color="white").place(x=420, y=30)
+    ctk.CTkLabel(master=frame_right, text="Valor Unitário", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580, y=30)
+    ctk.CTkLabel(master=frame_right, text="Imposto", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780, y=30)
+    ctk.CTkLabel(master=frame_right, text="R$", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=30)
+
     if produto_encontrado:
-        # Limpar o frame antes de exibir o novo produto
-        for widget in frame_right.winfo_children():
-            widget.destroy()
-
-        # Exibir os detalhes do produto no frame
-        ctk.CTkLabel(master=frame_right, text=f"Nome: {produto_encontrado['nome_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").pack()
-        ctk.CTkLabel(master=frame_right, text=f"Valor Unitário: {produto_encontrado['valor_unitario']}", font=("Arial", 18), bg_color=azul, text_color="white").pack()
-        ctk.CTkLabel(master=frame_right, text=f"Quantidade: {produto_encontrado['quantidade']}", font=("Arial", 18), bg_color=azul, text_color="white").pack()
-        ctk.CTkLabel(master=frame_right, text=f"Imposto: {produto_encontrado['imposto']}", font=("Arial", 18), bg_color=azul, text_color="white").pack()
+        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['codigo_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=80,y=50)
+        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['nome_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200,y=50)
+        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['quantidade']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=420,y=50)
+        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['valor_unitario']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580,y=50)
+        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['imposto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780,y=50)
     else:
-        # Limpar o frame se nenhum produto for encontrado
+        # Exibir uma mensagem se nenhum produto for encontrado
         for widget in frame_right.winfo_children():
             widget.destroy()
-
-        # Exibir uma mensagem se nenhum produto for encontrado
-        ctk.CTkLabel(master=frame_right, text="Produto não encontrado", font=("Arial", 18), bg_color=azul, text_color="white").pack()
+        ctk.CTkLabel(master=frame_right, text="Produto não encontrado", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580,y=50)
+        
 
 # Botão de pesquisa
 btn_pesquisar = ctk.CTkButton(master=root, text="Pesquisar", command=pesquisar_produto, width=100, height=50, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
@@ -227,6 +231,18 @@ frame_rightdown.place(x=1000, y=920)
 
 frame_right = ctk.CTkFrame(master=root, width=5000, height=400, fg_color=azul)
 frame_right.place(x=500, y=400)
+
+
+#Label Dentro do Frame Right
+ctk.CTkLabel(master=frame_right, text="ID", font=("Arial", 18), bg_color=azul, text_color="white").place(x=80, y=30)
+ctk.CTkLabel(master=frame_right, text="Descrição", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200, y=30)
+ctk.CTkLabel(master=frame_right, text="Quantidade", font=("Arial", 18), bg_color=azul, text_color="white").place(x=420, y=30)
+ctk.CTkLabel(master=frame_right, text="Valor Unitário", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580, y=30)
+ctk.CTkLabel(master=frame_right, text="Imposto", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780, y=30)
+ctk.CTkLabel(master=frame_right, text="R$", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=30)
+
+
+
 
 # Logo
 logo_image = Image.open("./Logo 2.png")
@@ -259,7 +275,6 @@ ctk.CTkLabel(master=frame_down, text="CUPOM ABERTO", font=("Arial Bold", 30), bg
 #Valor da Compra
 ctk.CTkLabel(master=frame_rightdown, text="R$", font=("Arial Bold", 50), bg_color=azul, text_color="white").place(x=400, y=40) 
 ctk.CTkLabel(master=frame_rightdown, text="XX,XX", font=("Arial Bold", 50), bg_color=azul, text_color="white").place(x=500, y=40) 
-
 
 # Função para fechar a janela de cadastro e restaurar a janela principal
 def voltar_pagina_anterior(cadastro_window):
@@ -306,10 +321,10 @@ def cadastro():
     frame_cadastro.place(x=250,y=230)
 
     # OptionMenu Categoria
-    #ctk.CTkLabel(cadastro_window, text="Categoria", font=("arial bold", 14), text_color="black").pack()
-    #categoria = ctk.CTkOptionMenu(master=frame_cadastro, values=["Alimentos", "Bebidas", "Higiene Pessoal", "Hortifruti", "Congelados", "Frios", "Vestuário", "Pets", "Outros..."])
-    #categoria.pack(pady=20)
-    #categoria.set("Escolha a categoria")
+    ctk.CTkLabel(master= cadastro_window, text="Categoria", font=("arial bold", 14), text_color="black").pack()
+    categoria = ctk.CTkOptionMenu(master=frame_cadastro, values=["Alimentos", "Bebidas", "Higiene Pessoal", "Hortifruti", "Congelados", "Frios", "Vestuário", "Pets", "Outros..."])
+    categoria.pack(pady=20)
+    categoria.set("Escolha a categoria")
 
     #Frame Cadastro de Produto
 
