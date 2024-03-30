@@ -243,17 +243,34 @@ def pesquisar_produto():
         numero_item_formatado = f"{contador_itens:03d}"
         contador_itens += 1  # Incrementar o contador de itens
 
+        #Item
         ctk.CTkLabel(master=frame_right, text=numero_item_formatado, font=("Arial", 18), bg_color=azul, text_color="white").place(x=80, y=y_coordinate)
+
+        #ID
         ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['codigo_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200, y=y_coordinate)
+
+        #Descrição
         ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['nome_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=420, y=y_coordinate)
+
+        #Quantidade
         ctk.CTkLabel(master=frame_right, text=f"{quantidade}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580, y=y_coordinate)
+
+        #Valor Unitário
         ctk.CTkLabel(master=frame_right, text=f"{float(produto_encontrado['valor_unitario'])}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780, y=y_coordinate)
-        ctk.CTkLabel(master=frame_right, text=f"{float(produto_encontrado['imposto']) * quantidade:.2f}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=y_coordinate)
-        valor_total = float(produto_encontrado['valor_unitario']) * quantidade
-        ctk.CTkLabel(master=frame_right, text=f"{valor_total:.2f}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1070, y=y_coordinate)
+
+        # Imposto
+        imposto_por_item = float(produto_encontrado['imposto']) * quantidade
+        ctk.CTkLabel(master=frame_right, text=f"{imposto_por_item:.2f}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=y_coordinate)
+
+        # Valor Total com Imposto
+        valor_total_sem_imposto = float(produto_encontrado['valor_unitario']) * quantidade
         
+        imposto_total = (imposto_por_item/100) * valor_total_sem_imposto
+        valor_total_com_imposto = valor_total_sem_imposto + imposto_total
+        ctk.CTkLabel(master=frame_right, text=f"{valor_total_com_imposto:.2f}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1070, y=y_coordinate)
+
         # Adicionar o valor total ao total geral
-        total_geral += valor_total
+        total_geral += valor_total_com_imposto
 
         # Limpar o rótulo do total geral antes de exibir
         for widget in frame_rightdown.winfo_children():
@@ -262,7 +279,7 @@ def pesquisar_produto():
         # Exibir o total geral
         total_label = ctk.CTkLabel(master=frame_rightdown, text=f"R$ {total_geral:.2f}", font=("Arial Bold",50), bg_color=azul, text_color="white")
         total_label.place(x=400, y=40)
-        ctk.CTkLabel(master=frame_rightdown, text="SUB TOTAL", font=("Arial Bold", 30), bg_color=azul, text_color="white").place(x=60, y=50) 
+        ctk.CTkLabel(master=frame_rightdown, text="SUB TOTAL", font=("Arial Bold", 30), bg_color=azul, text_color="white").place(x=60, y=50)
 
     else:
         # Exibir uma mensagem se nenhum produto for encontrado
