@@ -105,16 +105,27 @@ def finalizar_compra():
     ctk.CTkLabel(finalizar_compra_window, text="R$ TROCO",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=550)
 
     #Label Valor(Falta def)
-
     valor_da_compra=ctk.CTkLabel(finalizar_compra_window, text="XX,XX",font=("Arial Bold",40),bg_color="white",text_color=cinza).place(x=920, y=250)
     
-    #Botões de Pagamento
-    btn_dinheiro = ctk.CTkButton(master=finalizar_compra_window, text="DINHEIRO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
+
+
+    #Pagamento em Dinheiro
+    def pagamento_dinheiro_window():
+        pagamento_dinheiro_window=ctk.CTkToplevel(root,fg_color=azul)
+        pagamento_dinheiro_window.geometry("800x700")
+        pagamento_dinheiro_window.grab_set()
+
+        frame_dinheiro= ctk.CTkFrame(master=pagamento_dinheiro_window, width=400,height=500,fg_color="white", bg_color="white",corner_radius=50)
+        frame_dinheiro.place(x=210,y=100)
+
+    btn_dinheiro = ctk.CTkButton(master=finalizar_compra_window, command=pagamento_dinheiro_window,text="DINHEIRO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
     btn_dinheiro.place(x=100, y=350)
 
+    #Pagamento em Débito
     btn_debito = ctk.CTkButton(master=finalizar_compra_window, text="DEBITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
     btn_debito.place(x=450, y=350)
 
+    #Pagamento em Crédito
     btn_credito = ctk.CTkButton(master=finalizar_compra_window, text="CRÉDITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
     btn_credito.place(x=800, y=350)
 
