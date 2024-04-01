@@ -37,19 +37,37 @@ def login():
     login_window.title("Login")
 
 #Frame
-    frame_login=ctk.CTkFrame(master=login_window, width=500, height=480,fg_color=preto,border_width=3,corner_radius=20,border_color=ciano)
+    frame_login=ctk.CTkFrame(master=login_window, 
+                            width=500, 
+                            height=480,
+                            fg_color=preto,
+                            border_width=3,
+                            corner_radius=20,
+                            border_color=ciano)
     frame_login.pack(pady=100)
 
     #Logo
     logo_image = Image.open("./simbolo.png")
     logo = ImageTk.PhotoImage(logo_image.resize((200, 100)))
-    ctk.CTkLabel(frame_login, text=None, image=logo, bg_color=preto).place(x=160, y=60)
+    ctk.CTkLabel(frame_login, 
+                text=None, 
+                image=logo, 
+                bg_color=preto).place(x=160, y=60)
         
     # Campos de entrada para nome de usuário e senha
-    username_entry = ctk.CTkEntry(master=frame_login, width=300,placeholder_text="nome do usuário",fg_color=cinza,height=50)
+    username_entry = ctk.CTkEntry(master=frame_login, 
+                                width=300,
+                                placeholder_text="nome do usuário",
+                                fg_color=cinza,
+                                height=50)
     username_entry.place(x=100,y=200)
 
-    password_entry = ctk.CTkEntry(master=frame_login, width=300, placeholder_text="sua senha",show="*",fg_color=cinza,height=50 )  # Show="*" oculta a senha
+    password_entry = ctk.CTkEntry(master=frame_login, 
+                                width=300, 
+                                placeholder_text="sua senha",
+                                show="*", # Show="*" oculta a senha
+                                fg_color=cinza,
+                                height=50 ) 
     password_entry.place(x=100,y=280)
 
     # Função de verificação de login
@@ -78,7 +96,13 @@ def login():
                 password_entry.delete(0, END)
 
     # Botão de login
-    login_button = ctk.CTkButton(master=frame_login, text="ENTRAR", command=verificar_login, fg_color=azul, width=300, height=50,font=("Arial Bold",20))
+    login_button = ctk.CTkButton(master=frame_login, 
+                                text="ENTRAR", 
+                                command=verificar_login, 
+                                fg_color=azul, 
+                                width=300, 
+                                height=50,
+                                font=("Arial Bold",20))
     login_button.place(x=100,y=360)
 
 
@@ -145,7 +169,7 @@ def finalizar_compra():
     
         #Valor Recebido
         ctk.CTkLabel(frame_dinheiro, text="VALOR RECEBIDO:", font=("Arial Bold",25), text_color="black", bg_color="white").place(x=50, y=180)
-        entry_valor_recebido = ctk.CTkEntry(frame_dinheiro, placeholder_text="Digite o Valor", font=("Arial Bold",15), bg_color="white", fg_color="white", width=300, height=20, border_width=3, border_color=azul)
+        entry_valor_recebido = ctk.CTkEntry(frame_dinheiro, placeholder_text="Digite o Valor", font=("Arial Bold",15), bg_color="white", fg_color="white", width=300, height=40, border_width=3, border_color=azul, text_color=cinza)
         entry_valor_recebido.place(x=50, y=220)
         
         # Função para calcular o troco
@@ -171,11 +195,23 @@ def finalizar_compra():
 
             
         # Botão para calcular o troco
-        btn_calcular_troco = ctk.CTkButton(master=frame_dinheiro, text="Calcular Troco", command=calcular_troco, font=("Arial Bold",18), text_color="black", fg_color=azul, width=200, height=20, corner_radius=20)
+        btn_calcular_troco = ctk.CTkButton(master=frame_dinheiro, 
+                                        text="Calcular Troco", 
+                                        command=calcular_troco, 
+                                        font=("Arial Bold",18), 
+                                        text_color="white", 
+                                        fg_color=azul, 
+                                        width=200, 
+                                        height=20, 
+                                        corner_radius=20)
         btn_calcular_troco.place(x=50, y=270)
         
         #Troco a Dar
-        ctk.CTkLabel(frame_dinheiro, text="TROCO A DAR: ", font=("Arial Bold",25), text_color="black", bg_color="white").place(x=50, y=320)
+        ctk.CTkLabel(frame_dinheiro, 
+                    text="TROCO A DAR: ", 
+                    font=("Arial Bold",25), 
+                    text_color="black", 
+                    bg_color="white").place(x=50, y=320)
 
         #Voltar para área de pagamento
         def voltar_pagamento():
@@ -187,14 +223,39 @@ def finalizar_compra():
             messagebox.showinfo("Sucesso", "Compra Finalizada em Dinheiro")
 
         #Botões Cancelar/Confirmar
-        btn_cancelar_dinheiro=ctk.CTkButton(master=frame_dinheiro, text="CANCELAR",command=voltar_pagamento, font=("Arial Bold",18),text_color="black",fg_color=vermelho,width=100,height=20,corner_radius=20,)
+        btn_cancelar_dinheiro=ctk.CTkButton(master=frame_dinheiro, 
+                                            text="CANCELAR",
+                                            command=voltar_pagamento, 
+                                            font=("Arial Bold",18),
+                                            text_color="black",
+                                            fg_color=vermelho,
+                                            width=100,
+                                            height=20,
+                                            corner_radius=20,)
         btn_cancelar_dinheiro.place(x=50, y=450)
 
-        btn_confirmar_dinheiro=ctk.CTkButton(master=frame_dinheiro, text="CONFIRMAR",command=dinheiro_finalizada,font=("Arial Bold",18),text_color="black",fg_color=verde,width=100,height=20,corner_radius=20)
+        btn_confirmar_dinheiro=ctk.CTkButton(master=frame_dinheiro,
+                                            text="CONFIRMAR",
+                                            command=dinheiro_finalizada,
+                                            font=("Arial Bold",18),
+                                            text_color="black",
+                                            fg_color=verde,
+                                            width=100,
+                                            height=20,
+                                            corner_radius=20)
         btn_confirmar_dinheiro.place(x=220, y=450)
 
     #Pagamento em Dinheiro
-    btn_dinheiro = ctk.CTkButton(master=finalizar_compra_window, command=pagamento_dinheiro_window,text="DINHEIRO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
+    btn_dinheiro = ctk.CTkButton(master=finalizar_compra_window, 
+                                command=pagamento_dinheiro_window,
+                                text="DINHEIRO", 
+                                width=250, 
+                                height=70, 
+                                fg_color=azul,
+                                corner_radius=20, 
+                                bg_color=azul,
+                                text_color="white",
+                                font=("Arial Bold",18))
     btn_dinheiro.place(x=100, y=350)
 
     #Pagamento em Máquininha
@@ -208,7 +269,15 @@ def finalizar_compra():
         finalizar_compra_window.destroy()
         resetar_frame_right()
 
-    btn_debito = ctk.CTkButton(master=finalizar_compra_window,command=debito_finalizado,text="DEBITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
+    btn_debito = ctk.CTkButton(master=finalizar_compra_window,
+                                command=debito_finalizado,text="DEBITO", 
+                                width=250, 
+                                height=70, 
+                                fg_color=azul,
+                                corner_radius=20, 
+                                bg_color=azul,
+                                text_color="white",
+                                font=("Arial Bold",18))
     btn_debito.place(x=450, y=350)
 
     btn_credito = ctk.CTkButton(master=finalizar_compra_window,command=credito_finalizado, text="CRÉDITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
@@ -367,57 +436,39 @@ def cadastro():
             messagebox.showerror("Erro", "Preencha todos os campos antes de salvar!")
 
     #Frame Cadastro de Produto
-    frame_topcadastro= ctk.CTkFrame(master=cadastro_window, width=2000, height=100, fg_color=azul)
+    frame_topcadastro= ctk.CTkFrame(master=cadastro_window, width=2000, height=100, fg_color=azul,bg_color="white")
     frame_topcadastro.place(x=0, y=0)
 
-    frame_cadastro=ctk.CTkFrame(cadastro_window,width=1400,height=700)
-    frame_cadastro.place(x=250,y=230)
+    frame_cadastro=ctk.CTkFrame(cadastro_window,width=600,height=700,fg_color=azul)
+    frame_cadastro.place(x=660,y=230)
 
-    # OptionMenu Categoria
-    ctk.CTkLabel(master= cadastro_window, text="Categoria", font=("arial bold", 14), text_color="black").pack()
-    categoria = ctk.CTkOptionMenu(master=frame_cadastro, values=["Alimentos", "Bebidas", "Higiene Pessoal", "Hortifruti", "Congelados", "Frios", "Vestuário", "Pets", "Outros..."])
-    categoria.pack(pady=20)
-    categoria.set("Escolha a categoria")
-
-    #Frame Cadastro de Produto
-
-    frame_topcadastro= ctk.CTkFrame(master=cadastro_window, width=2000, height=100, fg_color=azul)
-    frame_topcadastro.place(x=0, y=0)
-
-    frame_cadastro= ctk.CTkFrame(cadastro_window,width=1400,height=700)
-    frame_cadastro.place(x=250,y=230)
-
-    btn_salvar = ctk.CTkButton(master=frame_cadastro, text="Salvar",width=450,height=50, command=salvar_mongodb, fg_color=azul,corner_radius=20,text_color="white",font=("Arial Bold",18))
-    btn_salvar.place(x=475,y=550)
+    # Botão Salvar
+    btn_salvar = ctk.CTkButton(master=frame_cadastro, text="Salvar",width=450,height=50, command=salvar_mongodb, fg_color="white",corner_radius=20,text_color=cinza,font=("Arial Bold",18))
+    btn_salvar.place(x=80,y=550)
 
     # Entry Nome do Produto
-    entry_nome_produto = ctk.CTkEntry(master=frame_cadastro, width=450,height=50,placeholder_text="Nome do Produto")
-    entry_nome_produto.place(x=475,y=50)
+    entry_nome_produto = ctk.CTkEntry(master=frame_cadastro, width=450,height=50,placeholder_text="Nome do Produto",bg_color=azul, fg_color="white",text_color=cinza)
+    entry_nome_produto.place(x=80,y=50)
 
     # Entry Codigo do Produto
-    entry_codigoproduto = ctk.CTkEntry(master=frame_cadastro, width=450,height=50, placeholder_text="Codigo do Produto")
-    entry_codigoproduto.place(x=475,y=150)
+    entry_codigoproduto = ctk.CTkEntry(master=frame_cadastro, width=450,height=50, placeholder_text="Codigo do Produto",bg_color=azul, fg_color="white",text_color=cinza)
+    entry_codigoproduto.place(x=80,y=150)
 
     # Entry Quantidade
-    entry_quantidade = ctk.CTkEntry(master=frame_cadastro,width=450,height=50,placeholder_text="Quantidade")
-    entry_quantidade.place(x=475,y=250)
+    entry_quantidade = ctk.CTkEntry(master=frame_cadastro,width=450,height=50,placeholder_text="Quantidade",bg_color=azul, fg_color="white",text_color=cinza)
+    entry_quantidade.place(x=80,y=250)
 
     # Entry Valor Unitário
-    entry_valor_unitario = ctk.CTkEntry(master=frame_cadastro,width=450,height=50,placeholder_text="Valor Unitário")
-    entry_valor_unitario.place(x=475,y=350)
+    entry_valor_unitario = ctk.CTkEntry(master=frame_cadastro,width=450,height=50,placeholder_text="Valor Unitário",bg_color=azul, fg_color="white",text_color=cinza)
+    entry_valor_unitario.place(x=80,y=350)
 
     # Entry Imposto
-    entry_imposto= ctk.CTkEntry(master=frame_cadastro,width=450,height=50, placeholder_text="Imposto")
-    entry_imposto.place(x=475,y=450)
+    entry_imposto= ctk.CTkEntry(master=frame_cadastro,width=450,height=50, placeholder_text="Imposto",bg_color=azul, fg_color="white",text_color=cinza)
+    entry_imposto.place(x=80,y=450)
 
     # Botão para voltar à página anterior
     btn_voltar = ctk.CTkButton(master=frame_topcadastro, text="Voltar à página anterior", command=lambda: voltar_pagina_anterior(cadastro_window),width=100, height=70, fg_color=azul, text_color="white",font=("Arial Bold",18),corner_radius=20)
     btn_voltar.place(x=475, y=20)
-
-   #Logo dentro do Cadastro
-    logo_image = Image.open("./Logo 2.png")
-    logo = ImageTk.PhotoImage(logo_image.resize((192, 100)))
-    ctk.CTkLabel(frame_topcadastro, text=None, image=logo, bg_color=azul).place(x=40, y=0)
 
    #Logo dentro do Cadastro
     logo_image = Image.open("./Logo 2.png")
