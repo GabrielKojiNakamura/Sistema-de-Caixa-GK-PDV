@@ -67,8 +67,7 @@ def login():
                                 placeholder_text="sua senha",
                                 show="*", # Show="*" oculta a senha
                                 fg_color=cinza,
-                                height=50 ) 
-    password_entry.place(x=100,y=280)
+                                height=50 ).place(x=100,y=280)
 
     # Função de verificação de login
     def verificar_login():
@@ -102,8 +101,7 @@ def login():
                                 fg_color=azul, 
                                 width=300, 
                                 height=50,
-                                font=("Arial Bold",20))
-    login_button.place(x=100,y=360)
+                                font=("Arial Bold",20)).place(x=100,y=360)
 
 
 # Função para abrir a tela de login
@@ -124,8 +122,9 @@ def atualizar_horario():
     label_horario.after(1000, atualizar_horario)  # Atualiza a cada 1000ms (1 segundo)
 
 # Criar o rótulo para exibir a hora
-label_horario = Label(root, font=("Arial", 16),fg=cinza)
-label_horario.place(x=1350, y=260)
+label_horario = Label(root, 
+                    font=("Arial", 16),
+                    fg=cinza).place(x=1350, y=260)
 
 # Iniciar a função para atualizar o horário
 atualizar_horario()
@@ -136,7 +135,11 @@ def finalizar_compra():
     finalizar_compra_window.grab_set() 
         
     #Frame Cadastro de Produto
-    frame_finalizar= ctk.CTkFrame(master=finalizar_compra_window, width=2000, height=100, fg_color=azul, bg_color=azul)
+    frame_finalizar= ctk.CTkFrame(master=finalizar_compra_window, 
+                                width=2000, 
+                                height=100, 
+                                fg_color=azul, 
+                                bg_color=azul)
     frame_finalizar.place(x=0, y=0)
 
     #Botão para voltar
@@ -144,15 +147,35 @@ def finalizar_compra():
         finalizar_compra_window.destroy()  # Fecha a janela de fechar caixa
         root.deiconify()  # Restaura a janela principal
 
-    btn_voltar = ctk.CTkButton(master=frame_finalizar, text="Voltar à página anterior", command=lambda: voltar_pagina_anterior(finalizar_compra_window),width=100, height=70, fg_color=azul, text_color="white",font=("Arial Bold",18),corner_radius=20)
-    btn_voltar.place(x=100, y=20)
+    btn_voltar = ctk.CTkButton(master=frame_finalizar, 
+                            text="Voltar à página anterior", 
+                            command=lambda: voltar_pagina_anterior(finalizar_compra_window),
+                            width=100, 
+                            height=70, 
+                            fg_color=azul, 
+                            text_color="white",
+                            font=("Arial Bold",18),
+                            corner_radius=20).place(x=100, y=20)
 
     #Label
-    ctk.CTkLabel(finalizar_compra_window, text="R$ SUB TOTAL",font=("Arial Bold",18),bg_color="white",text_color=cinza).place(x=100, y=150)
-    ctk.CTkLabel(finalizar_compra_window, text="R$ TOTAL A PAGAR",font=("Arial Bold",18),bg_color="white",text_color=cinza).place(x=880, y=150)
+    ctk.CTkLabel(finalizar_compra_window, 
+                text="R$ SUB TOTAL",
+                font=("Arial Bold",18),
+                bg_color="white",
+                text_color=cinza).place(x=100, y=150)
+
+    ctk.CTkLabel(finalizar_compra_window, 
+                text="R$ TOTAL A PAGAR",
+                font=("Arial Bold",18),
+                bg_color="white",
+                text_color=cinza).place(x=880, y=150)
 
     #Label Valor
-    valor_da_compra=ctk.CTkLabel(finalizar_compra_window, text=f"R$ {total_geral:.2f}",font=("Arial Bold",40),bg_color="white",text_color=cinza).place(x=880, y=190)
+    valor_da_compra=ctk.CTkLabel(finalizar_compra_window, 
+                                text=f"R$ {total_geral:.2f}",
+                                font=("Arial Bold",40),
+                                bg_color="white",
+                                text_color=cinza).place(x=880, y=190)
     
     def pagamento_dinheiro_window():
         pagamento_dinheiro_window = ctk.CTkToplevel(root, fg_color=azul)
@@ -160,17 +183,43 @@ def finalizar_compra():
         pagamento_dinheiro_window.grab_set()
 
         #Frame Central
-        frame_dinheiro = ctk.CTkFrame(master=pagamento_dinheiro_window, width=400, height=500, fg_color="white", bg_color="white", corner_radius=50)
+        frame_dinheiro = ctk.CTkFrame(master=pagamento_dinheiro_window, 
+                                    width=400, 
+                                    height=500, 
+                                    fg_color="white", 
+                                    bg_color="white", 
+                                    corner_radius=50)
         frame_dinheiro.place(x=210, y=100)   
         
         #Total a Pagar
-        ctk.CTkLabel(frame_dinheiro, text="TOTAL A PAGAR:", font=("Arial Bold",25), text_color="black", bg_color="white").place(x=50, y=50)
-        ctk.CTkLabel(frame_dinheiro, text=f"R${total_geral:.2f}", font=("Arial Bold",25), text_color="black", bg_color="white").place(x=50, y=90)
+        ctk.CTkLabel(frame_dinheiro, 
+                    text="TOTAL A PAGAR:", 
+                    font=("Arial Bold",25), 
+                    text_color="black", 
+                    bg_color="white").place(x=50, y=50)
+
+        ctk.CTkLabel(frame_dinheiro, 
+                    text=f"R${total_geral:.2f}", 
+                    font=("Arial Bold",25), 
+                    text_color="black", 
+                    bg_color="white").place(x=50, y=90)
     
         #Valor Recebido
-        ctk.CTkLabel(frame_dinheiro, text="VALOR RECEBIDO:", font=("Arial Bold",25), text_color="black", bg_color="white").place(x=50, y=180)
-        entry_valor_recebido = ctk.CTkEntry(frame_dinheiro, placeholder_text="Digite o Valor", font=("Arial Bold",15), bg_color="white", fg_color="white", width=300, height=40, border_width=3, border_color=azul, text_color=cinza)
-        entry_valor_recebido.place(x=50, y=220)
+        ctk.CTkLabel(frame_dinheiro, text="VALOR RECEBIDO:", 
+                                    font=("Arial Bold",25), 
+                                    text_color="black", 
+                                    bg_color="white").place(x=50, y=180)
+
+        entry_valor_recebido = ctk.CTkEntry(frame_dinheiro, 
+                                            placeholder_text="Digite o Valor", 
+                                            font=("Arial Bold",15), 
+                                            bg_color="white", 
+                                            fg_color="white", 
+                                            width=300, 
+                                            height=40, 
+                                            border_width=3, 
+                                            border_color=azul, 
+                                            text_color=cinza).place(x=50, y=220)
         
         # Função para calcular o troco
         def calcular_troco():
@@ -186,8 +235,11 @@ def finalizar_compra():
                 troco = valor_recebido - total_geral
 
                 # Exibir o troco
-                label_troco = ctk.CTkLabel(frame_dinheiro, text=f"R$ {troco:.2f}", font=("Arial Bold", 25), bg_color="white", text_color=vermelho)
-                label_troco.place(x=250, y=320)
+                label_troco = ctk.CTkLabel(frame_dinheiro, 
+                                            text=f"R$ {troco:.2f}", 
+                                            font=("Arial Bold", 25), 
+                                            bg_color="white", 
+                                            text_color=vermelho).place(x=250, y=320)
 
             except ValueError:
                 # Lidar com a entrada inválida
@@ -203,8 +255,7 @@ def finalizar_compra():
                                         fg_color=azul, 
                                         width=200, 
                                         height=20, 
-                                        corner_radius=20)
-        btn_calcular_troco.place(x=50, y=270)
+                                        corner_radius=20).place(x=50, y=270)
         
         #Troco a Dar
         ctk.CTkLabel(frame_dinheiro, 
@@ -231,8 +282,7 @@ def finalizar_compra():
                                             fg_color=vermelho,
                                             width=100,
                                             height=20,
-                                            corner_radius=20,)
-        btn_cancelar_dinheiro.place(x=50, y=450)
+                                            corner_radius=20,).place(x=50, y=450)
 
         btn_confirmar_dinheiro=ctk.CTkButton(master=frame_dinheiro,
                                             text="CONFIRMAR",
@@ -242,8 +292,7 @@ def finalizar_compra():
                                             fg_color=verde,
                                             width=100,
                                             height=20,
-                                            corner_radius=20)
-        btn_confirmar_dinheiro.place(x=220, y=450)
+                                            corner_radius=20).place(x=220, y=450)
 
     #Pagamento em Dinheiro
     btn_dinheiro = ctk.CTkButton(master=finalizar_compra_window, 
@@ -255,8 +304,7 @@ def finalizar_compra():
                                 corner_radius=20, 
                                 bg_color=azul,
                                 text_color="white",
-                                font=("Arial Bold",18))
-    btn_dinheiro.place(x=100, y=350)
+                                font=("Arial Bold",18)).place(x=100, y=350)
 
     #Pagamento em Máquininha
     def debito_finalizado():
@@ -277,19 +325,38 @@ def finalizar_compra():
                                 corner_radius=20, 
                                 bg_color=azul,
                                 text_color="white",
-                                font=("Arial Bold",18))
-    btn_debito.place(x=450, y=350)
+                                font=("Arial Bold",18)).place(x=450, y=350)
 
-    btn_credito = ctk.CTkButton(master=finalizar_compra_window,command=credito_finalizado, text="CRÉDITO", width=250, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
-    btn_credito.place(x=800, y=350)
+    btn_credito = ctk.CTkButton(master=finalizar_compra_window,
+                                command=credito_finalizado, 
+                                text="CRÉDITO", 
+                                width=250, 
+                                height=70, 
+                                fg_color=azul,
+                                corner_radius=20, 
+                                bg_color=azul,
+                                text_color="white",
+                                font=("Arial Bold",18)).place(x=800, y=350)
 
 # Código e Descrição
-entry_barra_codigo = ctk.CTkEntry(root, width=1370, height=50, placeholder_text="Código/Descrição",fg_color="white",text_color=cinza,font=("Arial Bold",18),border_color=azul)
-entry_barra_codigo.place(x=199, y=200)
+entry_barra_codigo = ctk.CTkEntry(root, 
+                                width=1370, 
+                                height=50, 
+                                placeholder_text="Código/Descrição",
+                                fg_color="white",
+                                text_color=cinza,
+                                font=("Arial Bold",18),
+                                border_color=azul).place(x=199, y=200)
 
 # Quantidade
-entry_quantidade = ctk.CTkEntry(root, width=150, height=50, placeholder_text="Quantidade",fg_color="white", text_color=cinza,border_color=azul,font=("Arial Bold",18))
-entry_quantidade.place(x=199, y=400)
+entry_quantidade = ctk.CTkEntry(root, 
+                                width=150, 
+                                height=50, 
+                                placeholder_text="Quantidade",
+                                fg_color="white", 
+                                text_color=cinza,
+                                border_color=azul,
+                                font=("Arial Bold",18)).place(x=199, y=400)
 
 # Definir uma variável global para o contador de itens
 contador_itens = 1
@@ -308,13 +375,46 @@ def pesquisar_produto():
         quantidade = int(entry_quantidade.get())  # Obtém a quantidade inserida na entry
 
         # Exibir os detalhes do produto no frame
-        ctk.CTkLabel(master=frame_right, text="Item", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=80, y=30)
-        ctk.CTkLabel(master=frame_right, text="ID", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=200, y=30)
-        ctk.CTkLabel(master=frame_right, text="Descrição", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=320, y=30)
-        ctk.CTkLabel(master=frame_right, text="Quantidade", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=580, y=30)
-        ctk.CTkLabel(master=frame_right, text="Valor Unitário", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=780, y=30)
-        ctk.CTkLabel(master=frame_right, text="Imposto(%)", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=970, y=30)
-        ctk.CTkLabel(master=frame_right, text="Valor Total", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=1070, y=30)
+        ctk.CTkLabel(master=frame_right, 
+                    text="Item", 
+                    font=("Arial", 18),
+                    bg_color="white", 
+                    text_color=cinza).place(x=80, y=30)
+
+        ctk.CTkLabel(master=frame_right, 
+                    text="ID", font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=200, y=30)
+
+        ctk.CTkLabel(master=frame_right, 
+                    text="Descrição", 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=320, y=30)
+
+        ctk.CTkLabel(master=frame_right, 
+                    text="Quantidade", 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=580, y=30)
+
+        ctk.CTkLabel(master=frame_right, 
+                    text="Valor Unitário", 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=780, y=30)
+
+        ctk.CTkLabel(master=frame_right, 
+                    text="Imposto(%)", 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=970, y=30)
+
+        ctk.CTkLabel(master=frame_right, 
+                    text="Valor Total", 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=1070, y=30)
 
         y_coordinate = 0 + contador_itens * 50  # Definir a coordenada y baseada no número de itens já exibidos
 
@@ -323,30 +423,58 @@ def pesquisar_produto():
         contador_itens += 1  # Incrementar o contador de itens
 
         #Item
-        ctk.CTkLabel(master=frame_right, text=numero_item_formatado, font=("Arial", 18), bg_color="white", text_color=cinza).place(x=80, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, 
+                    text=numero_item_formatado, 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=80, y=y_coordinate)
 
         #ID
-        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['codigo_produto']}", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=200, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, 
+                    text=f"{produto_encontrado['codigo_produto']}", 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=200, y=y_coordinate)
 
         #Descrição
-        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['nome_produto']}", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=320, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, 
+                    text=f"{produto_encontrado['nome_produto']}", 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=320, y=y_coordinate)
 
         #Quantidade
-        ctk.CTkLabel(master=frame_right, text=f"{quantidade}", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=580, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, 
+                    text=f"{quantidade}", 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=580, y=y_coordinate)
 
         #Valor Unitário
-        ctk.CTkLabel(master=frame_right, text=f"{float(produto_encontrado['valor_unitario'])}", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=780, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, 
+                    text=f"{float(produto_encontrado['valor_unitario'])}", 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=780, y=y_coordinate)
 
         # Imposto
         imposto_por_item = float(produto_encontrado['imposto']) * quantidade
-        ctk.CTkLabel(master=frame_right, text=f"{imposto_por_item:.2f}", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=970, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, 
+                    text=f"{imposto_por_item:.2f}", 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=970, y=y_coordinate)
 
         # Valor Total com Imposto
         valor_total_sem_imposto = float(produto_encontrado['valor_unitario']) * quantidade
         
         imposto_total = (imposto_por_item/100) * valor_total_sem_imposto
         valor_total_com_imposto = valor_total_sem_imposto + imposto_total
-        ctk.CTkLabel(master=frame_right, text=f"{valor_total_com_imposto:.2f}", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=1070, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, 
+                    text=f"{valor_total_com_imposto:.2f}", 
+                    font=("Arial", 18), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=1070, y=y_coordinate)
 
         # Adicionar o valor total ao total geral
         total_geral += valor_total_com_imposto
@@ -356,47 +484,101 @@ def pesquisar_produto():
             widget.destroy()
 
         # Exibir o total geral
-        total_label = ctk.CTkLabel(master=frame_rightdown, text=f"R$ {total_geral:.2f}", font=("Arial Bold",50), bg_color="white", text_color=cinza)
-        total_label.place(x=400, y=40)
-        ctk.CTkLabel(master=frame_rightdown, text="SUB TOTAL", font=("Arial Bold", 30), bg_color="white", text_color=cinza).place(x=60, y=50)
+        total_label = ctk.CTkLabel(master=frame_rightdown, 
+                                    text=f"R$ {total_geral:.2f}", 
+                                    font=("Arial Bold",50), 
+                                    bg_color="white", 
+                                    text_color=cinza).place(x=400, y=40)
+
+        ctk.CTkLabel(master=frame_rightdown, 
+                    text="SUB TOTAL", 
+                    font=("Arial Bold", 30), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=60, y=50)
 
     else:
         # Exibir uma mensagem se nenhum produto for encontrado
         messagebox.showerror("Erro", "Produto não encontrado")
         
 # Botão de pesquisa
-btn_pesquisar = ctk.CTkButton(master=root, text="Pesquisar", command=pesquisar_produto, width=100, height=50, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
-btn_pesquisar.place(x=1570, y=200)
+btn_pesquisar = ctk.CTkButton(master=root, 
+                            text="Pesquisar", 
+                            command=pesquisar_produto, 
+                            width=100, 
+                            height=50, 
+                            fg_color=azul,
+                            corner_radius=20, 
+                            bg_color=azul,
+                            text_color="white",
+                            font=("Arial Bold",18)).place(x=1570, y=200)
 
 # Frames
-frame_top= ctk.CTkFrame(master=root, width=2000, height=100, fg_color=azul)
-frame_top.place(x=0, y=0)
+frame_top= ctk.CTkFrame(master=root, 
+                        width=2000, 
+                        height=100, 
+                        fg_color=azul).place(x=0, y=0)
 
-frame_rightdown = ctk.CTkFrame(master=root, width=1000, height=330, fg_color="white",border_color=azul,border_width=2)
-frame_rightdown.place(x=1000, y=920)
+frame_rightdown = ctk.CTkFrame(master=root, 
+                            width=1000, 
+                            height=330, 
+                            fg_color="white",
+                            border_color=azul,
+                            border_width=2).place(x=1000, y=920)
 
-frame_right = ctk.CTkFrame(master=root, width=5000, height=400, fg_color="white",border_color=azul,border_width=2)
-frame_right.place(x=500, y=400)
+frame_right = ctk.CTkFrame(master=root, 
+                        width=5000, 
+                        height=400, 
+                        fg_color="white",
+                        border_color=azul,
+                        border_width=2).place(x=500, y=400)
 
 # Logo
 logo_image = Image.open("./Logo 2.png")
 logo = ImageTk.PhotoImage(logo_image.resize((192, 100)))
-ctk.CTkLabel(master=frame_top, text=None, image=logo, bg_color=azul).place(x=40, y=0)
+ctk.CTkLabel(master=frame_top, 
+            text=None, 
+            image=logo, 
+            bg_color=azul).place(x=40, y=0)
 
 # Labels Root Principal
 #Informações
-ctk.CTkLabel(master=frame_top, text="Suporte (11) 99999-9999", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1600, y=40)
-ctk.CTkLabel(root, text="Você está sendo atendido por: xxxxxxx", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=199, y=260)
-ctk.CTkLabel(master=frame_rightdown, text="SUB TOTAL", font=("Arial Bold", 30), bg_color="white", text_color=cinza).place(x=60, y=50) 
+ctk.CTkLabel(master=frame_top, 
+            text="Suporte (11) 99999-9999", 
+            font=("Arial", 18), 
+            bg_color=azul, 
+            text_color="white").place(x=1600, y=40)
+
+ctk.CTkLabel(root, 
+            text="Você está sendo atendido por: admin", 
+            font=("Arial", 18), 
+            bg_color="white", 
+            text_color=cinza).place(x=199, y=260)
+
+ctk.CTkLabel(master=frame_rightdown, 
+            text="SUB TOTAL", 
+            font=("Arial Bold", 30), 
+            bg_color="white", 
+            text_color=cinza).place(x=60, y=50) 
 
 #Código
-ctk.CTkLabel(root, text="Código/Descrição", font=("Arial", 22), bg_color="white", text_color=cinza).place(x=199, y=170)
+ctk.CTkLabel(root, text="Código/Descrição", 
+                    font=("Arial", 22), 
+                    bg_color="white", 
+                    text_color=cinza).place(x=199, y=170)
 
 #Quantidade
-ctk.CTkLabel(root, text="Quantidade", font=("Arial", 22), bg_color="white", text_color=cinza).place(x=199, y=370)
+ctk.CTkLabel(root, 
+            text="Quantidade", 
+            font=("Arial", 22), 
+            bg_color="white", 
+            text_color=cinza).place(x=199, y=370)
 
 #Valor da Compra
-ctk.CTkLabel(master=frame_rightdown, text="R$", font=("Arial Bold", 50), bg_color="white", text_color=cinza).place(x=400, y=40) 
+ctk.CTkLabel(master=frame_rightdown, 
+            text="R$", 
+            font=("Arial Bold", 50), 
+            bg_color="white", 
+            text_color=cinza).place(x=400, y=40) 
 
 # Função para fechar a janela de cadastro e restaurar a janela principal
 def voltar_pagina_anterior(cadastro_window):
@@ -436,48 +618,103 @@ def cadastro():
             messagebox.showerror("Erro", "Preencha todos os campos antes de salvar!")
 
     #Frame Cadastro de Produto
-    frame_topcadastro= ctk.CTkFrame(master=cadastro_window, width=2000, height=100, fg_color=azul,bg_color="white")
-    frame_topcadastro.place(x=0, y=0)
+    frame_topcadastro= ctk.CTkFrame(master=cadastro_window, 
+                                    width=2000, 
+                                    height=100, 
+                                    fg_color=azul,
+                                    bg_color="white").place(x=0, y=0)
 
-    frame_cadastro=ctk.CTkFrame(cadastro_window,width=600,height=700,fg_color=azul)
-    frame_cadastro.place(x=660,y=230)
+    frame_cadastro=ctk.CTkFrame(cadastro_window,
+                                width=600,
+                                height=700,
+                                fg_color=azul).place(x=660,y=230)
 
     # Botão Salvar
-    btn_salvar = ctk.CTkButton(master=frame_cadastro, text="Salvar",width=450,height=50, command=salvar_mongodb, fg_color="white",corner_radius=20,text_color=cinza,font=("Arial Bold",18))
-    btn_salvar.place(x=80,y=550)
+    btn_salvar = ctk.CTkButton(master=frame_cadastro, 
+                            text="Salvar",
+                            width=450,
+                            height=50, 
+                            command=salvar_mongodb, 
+                            fg_color="white",
+                            corner_radius=20,
+                            text_color=cinza,
+                            font=("Arial Bold",18)).place(x=80,y=550)
 
     # Entry Nome do Produto
-    entry_nome_produto = ctk.CTkEntry(master=frame_cadastro, width=450,height=50,placeholder_text="Nome do Produto",bg_color=azul, fg_color="white",text_color=cinza)
-    entry_nome_produto.place(x=80,y=50)
+    entry_nome_produto = ctk.CTkEntry(master=frame_cadastro, 
+                                    width=450,
+                                    height=50,
+                                    placeholder_text="Nome do Produto",
+                                    bg_color=azul, 
+                                    fg_color="white",
+                                    text_color=cinza).place(x=80,y=50)
 
     # Entry Codigo do Produto
-    entry_codigoproduto = ctk.CTkEntry(master=frame_cadastro, width=450,height=50, placeholder_text="Codigo do Produto",bg_color=azul, fg_color="white",text_color=cinza)
-    entry_codigoproduto.place(x=80,y=150)
+    entry_codigoproduto = ctk.CTkEntry(master=frame_cadastro, 
+                                    width=450,
+                                    height=50, 
+                                    placeholder_text="Codigo do Produto",
+                                    bg_color=azul, 
+                                    fg_color="white",
+                                    text_color=cinza).place(x=80,y=150)
 
     # Entry Quantidade
-    entry_quantidade = ctk.CTkEntry(master=frame_cadastro,width=450,height=50,placeholder_text="Quantidade",bg_color=azul, fg_color="white",text_color=cinza)
-    entry_quantidade.place(x=80,y=250)
+    entry_quantidade = ctk.CTkEntry(master=frame_cadastro,
+                                    width=450,
+                                    height=50,
+                                    placeholder_text="Quantidade",
+                                    bg_color=azul, 
+                                    fg_color="white",
+                                    ext_color=cinza).place(x=80,y=250)
 
     # Entry Valor Unitário
-    entry_valor_unitario = ctk.CTkEntry(master=frame_cadastro,width=450,height=50,placeholder_text="Valor Unitário",bg_color=azul, fg_color="white",text_color=cinza)
-    entry_valor_unitario.place(x=80,y=350)
+    entry_valor_unitario = ctk.CTkEntry(master=frame_cadastro,
+                                        width=450,
+                                        height=50,
+                                        placeholder_text="Valor Unitário",
+                                        bg_color=azul, 
+                                        fg_color="white",
+                                        text_color=cinza).place(x=80,y=350)
 
     # Entry Imposto
-    entry_imposto= ctk.CTkEntry(master=frame_cadastro,width=450,height=50, placeholder_text="Imposto",bg_color=azul, fg_color="white",text_color=cinza)
-    entry_imposto.place(x=80,y=450)
+    entry_imposto= ctk.CTkEntry(master=frame_cadastro,
+                                width=450,
+                                height=50, 
+                                placeholder_text="Imposto",
+                                bg_color=azul, 
+                                fg_color="white",
+                                text_color=cinza).place(x=80,y=450)
 
     # Botão para voltar à página anterior
-    btn_voltar = ctk.CTkButton(master=frame_topcadastro, text="Voltar à página anterior", command=lambda: voltar_pagina_anterior(cadastro_window),width=100, height=70, fg_color=azul, text_color="white",font=("Arial Bold",18),corner_radius=20)
-    btn_voltar.place(x=475, y=20)
+    btn_voltar = ctk.CTkButton(master=frame_topcadastro, 
+                                text="Voltar à página anterior", 
+                                command=lambda: voltar_pagina_anterior(cadastro_window),
+                                width=100, 
+                                height=70, 
+                                fg_color=azul, 
+                                text_color="white",
+                                font=("Arial Bold",18),
+                                corner_radius=20).place(x=475, y=20)
 
    #Logo dentro do Cadastro
     logo_image = Image.open("./Logo 2.png")
     logo = ImageTk.PhotoImage(logo_image.resize((192, 100)))
-    ctk.CTkLabel(frame_topcadastro, text=None, image=logo, bg_color=azul).place(x=40, y=0)
+    ctk.CTkLabel(frame_topcadastro, 
+                text=None, 
+                image=logo, 
+                bg_color=azul).place(x=40, y=0)
 
 # Botão para abrir a janela de cadastro
-btn_cadastro = ctk.CTkButton(master=frame_top, text="Cadastrar Produto", command=cadastro, width=100, height=70, fg_color=azul,corner_radius=20, bg_color=azul,text_color="white",font=("Arial Bold",18))
-btn_cadastro.place(x=500, y=20)
+btn_cadastro = ctk.CTkButton(master=frame_top, 
+                            text="Cadastrar Produto", 
+                            command=cadastro, 
+                            width=100, 
+                            height=70, 
+                            fg_color=azul,
+                            corner_radius=20, 
+                            bg_color=azul,
+                            text_color="white",
+                            font=("Arial Bold",18)).place(x=500, y=20)
 
 def resetar_frame_right():
         global total_geral, contador_itens
@@ -490,10 +727,24 @@ def resetar_frame_right():
         total_geral = 0
         contador_itens = 1
 
-btn_cancelar = ctk.CTkButton(master=frame_top, text="Cancelar Compra", command=resetar_frame_right, width=100, height=70, fg_color=azul,corner_radius=20,text_color="white",font=("Arial Bold",18))
-btn_cancelar.place(x=800, y=20)
+btn_cancelar = ctk.CTkButton(master=frame_top, 
+                            text="Cancelar Compra", 
+                            command=resetar_frame_right, 
+                            width=100, 
+                            height=70,
+                            fg_color=azul,
+                            corner_radius=20,
+                            text_color="white",
+                            font=("Arial Bold",18)).place(x=800, y=20)
 
-btn_fechar = ctk.CTkButton(master=frame_top, text="Fechar Compra", command=finalizar_compra, width=100, height=70, fg_color=azul,corner_radius=20,text_color="white",font=("Arial Bold",18))
-btn_fechar.place(x=1100, y=20)
+btn_fechar = ctk.CTkButton(master=frame_top, 
+                            text="Fechar Compra", 
+                            command=finalizar_compra, 
+                            width=100, 
+                            height=70, 
+                            fg_color=azul,
+                            corner_radius=20,
+                            text_color="white",
+                            font=("Arial Bold",18)).place(x=1100, y=20)
 
 root.mainloop()  # Executa o loop principal
