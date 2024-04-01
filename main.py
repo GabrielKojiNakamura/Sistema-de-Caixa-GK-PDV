@@ -804,7 +804,6 @@ def resetar_frame_right():
         apagar_valor=ctk.CTkFrame(master=frame_rightdown,width=400,height=100,fg_color="white")
         apagar_valor.place(x=300,y=10)
 
-
 btn_cancelar = ctk.CTkButton(master=frame_top, 
                             text="Cancelar Compra", 
                             command=resetar_frame_right, 
