@@ -7,7 +7,6 @@ from pymongo import MongoClient
 
 # Criar conexão com o MongoDB
 uri = "mongodb+srv://Gabriel:wzw5brC7z7Hyn6o9@cluster0.brk82ev.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-
 client = MongoClient(uri)
 db = client['Cluster0']  
 collection = db['produtos']  
@@ -47,10 +46,8 @@ def login():
     ctk.CTkLabel(frame_login, text=None, image=logo, bg_color=preto).place(x=160, y=60)
         
     # Campos de entrada para nome de usuário e senha
-
     username_entry = ctk.CTkEntry(master=frame_login, width=300,placeholder_text="nome do usuário",fg_color=cinza,height=50)
     username_entry.place(x=100,y=200)
-
 
     password_entry = ctk.CTkEntry(master=frame_login, width=300, placeholder_text="sua senha",show="*",fg_color=cinza,height=50 )  # Show="*" oculta a senha
     password_entry.place(x=100,y=280)
@@ -97,12 +94,14 @@ abrir_login()
 def atualizar_horario():
     agora = datetime.datetime.now()
     hora_formatada = agora.strftime("%H:%M:%S")
-    label_horario.config(text=hora_formatada)
+    data_formatada = agora.strftime("%d/%m/%Y")
+    horario_com_data = f"{data_formatada} {hora_formatada}"
+    label_horario.config(text=horario_com_data)
     label_horario.after(1000, atualizar_horario)  # Atualiza a cada 1000ms (1 segundo)
 
 # Criar o rótulo para exibir a hora
-label_horario = Label(root, font=("Arial", 18),fg="grey")
-label_horario.place(x=1600, y=170)
+label_horario = Label(root, font=("Arial", 16),fg=cinza)
+label_horario.place(x=1350, y=260)
 
 # Iniciar a função para atualizar o horário
 atualizar_horario()
@@ -125,12 +124,11 @@ def finalizar_compra():
     btn_voltar.place(x=100, y=20)
 
     #Label
-    ctk.CTkLabel(finalizar_compra_window, text="R$ SUB TOTAL",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=150)
-    ctk.CTkLabel(finalizar_compra_window, text="R$ SUB TOTAL",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=100, y=150)
-    ctk.CTkLabel(finalizar_compra_window, text="R$ TOTAL A PAGAR",font=("Arial Bold",18),bg_color="white",text_color="grey").place(x=870, y=150)
+    ctk.CTkLabel(finalizar_compra_window, text="R$ SUB TOTAL",font=("Arial Bold",18),bg_color="white",text_color=cinza).place(x=100, y=150)
+    ctk.CTkLabel(finalizar_compra_window, text="R$ TOTAL A PAGAR",font=("Arial Bold",18),bg_color="white",text_color=cinza).place(x=880, y=150)
 
     #Label Valor
-    valor_da_compra=ctk.CTkLabel(finalizar_compra_window, text=f"R$ {total_geral:.2f}",font=("Arial Bold",40),bg_color="white",text_color=cinza).place(x=920, y=250)
+    valor_da_compra=ctk.CTkLabel(finalizar_compra_window, text=f"R$ {total_geral:.2f}",font=("Arial Bold",40),bg_color="white",text_color=cinza).place(x=880, y=190)
     
     def pagamento_dinheiro_window():
         pagamento_dinheiro_window = ctk.CTkToplevel(root, fg_color=azul)
@@ -147,7 +145,7 @@ def finalizar_compra():
     
         #Valor Recebido
         ctk.CTkLabel(frame_dinheiro, text="VALOR RECEBIDO:", font=("Arial Bold",25), text_color="black", bg_color="white").place(x=50, y=180)
-        entry_valor_recebido = ctk.CTkEntry(frame_dinheiro, placeholder_text="Digite o Valor", font=("Arial Bold",25), bg_color="white", fg_color=azul, width=300, height=20, corner_radius=20)
+        entry_valor_recebido = ctk.CTkEntry(frame_dinheiro, placeholder_text="Digite o Valor", font=("Arial Bold",15), bg_color="white", fg_color="white", width=300, height=20, border_width=3, border_color=azul)
         entry_valor_recebido.place(x=50, y=220)
         
         # Função para calcular o troco
@@ -279,7 +277,7 @@ def pesquisar_produto():
         
         imposto_total = (imposto_por_item/100) * valor_total_sem_imposto
         valor_total_com_imposto = valor_total_sem_imposto + imposto_total
-        ctk.CTkLabel(master=frame_right, text=f"{valor_total_com_imposto:.2f}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1070, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, text=f"{valor_total_com_imposto:.2f}", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=1070, y=y_coordinate)
 
         # Adicionar o valor total ao total geral
         total_geral += valor_total_com_imposto
@@ -319,14 +317,14 @@ ctk.CTkLabel(master=frame_top, text=None, image=logo, bg_color=azul).place(x=40,
 # Labels Root Principal
 #Informações
 ctk.CTkLabel(master=frame_top, text="Suporte (11) 99999-9999", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1600, y=40)
-ctk.CTkLabel(root, text="Você está sendo atendido por: xxxxxxx", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=260)
-ctk.CTkLabel(master=frame_rightdown, text="SUB TOTAL", font=("Arial Bold", 30), bg_color="white", text_color="grey").place(x=60, y=50) 
+ctk.CTkLabel(root, text="Você está sendo atendido por: xxxxxxx", font=("Arial", 18), bg_color="white", text_color=cinza).place(x=199, y=260)
+ctk.CTkLabel(master=frame_rightdown, text="SUB TOTAL", font=("Arial Bold", 30), bg_color="white", text_color=cinza).place(x=60, y=50) 
 
 #Código
-ctk.CTkLabel(root, text="Código/Descrição", font=("Arial", 22), bg_color="white", text_color="grey").place(x=199, y=170)
+ctk.CTkLabel(root, text="Código/Descrição", font=("Arial", 22), bg_color="white", text_color=cinza).place(x=199, y=170)
 
 #Quantidade
-ctk.CTkLabel(root, text="Quantidade", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=370)
+ctk.CTkLabel(root, text="Quantidade", font=("Arial", 22), bg_color="white", text_color=cinza).place(x=199, y=370)
 
 #Valor da Compra
 ctk.CTkLabel(master=frame_rightdown, text="R$", font=("Arial Bold", 50), bg_color="white", text_color=cinza).place(x=400, y=40) 
