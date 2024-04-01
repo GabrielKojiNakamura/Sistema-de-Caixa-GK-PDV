@@ -11,20 +11,22 @@ uri = "mongodb+srv://Gabriel:wzw5brC7z7Hyn6o9@cluster0.brk82ev.mongodb.net/?retr
 client = MongoClient(uri)
 db = client['Cluster0']  
 collection = db['produtos']  
+collection_atendente = db['atendente']
 
 # Criar tela principal
 root = ctk.CTk()
 root.title("GK PDV")
 root._set_appearance_mode("light")
 root.geometry(f"{int(root.winfo_screenwidth())+int(root.winfo_screenheight())}")
+root.state('zoomed')
 
 #Cores
 azul = "#172635"    # Hexadecimal para um tom escuro de azul
 preto= "#1B1816"    # Hexadecimal para um tom escuro de preto
 cinza= "#202124"    # Hexadecimal para um tom escuro de cinza
 ciano= "#0DCBEF"    # Hexadecimal para um tom escuro de ciano
-vermelho= "#F23F42"
-verde= "#1ABC9C"
+vermelho= "#F23F42" # Hexadecimal para um tom escuro de vermelho
+verde= "#1ABC9C"# Hexadecimal para um tom escuro de verde
 
 def login():
     # Criar a janela de login
@@ -55,10 +57,28 @@ def login():
 
     # Função de verificação de login
     def verificar_login():
+            username = username_entry.get()
+            password = password_entry.get()
 
-        if username_entry.get() == "" and password_entry.get() == "":
-            login_window.destroy()  # Fechar janela de login
-            root.deiconify()  # Restaurar janela principal
+            usuarios = [
+                {"username": "admin", "password": "admin"}
+            ]
+
+            if username == "" or password == "":
+                messagebox.showerror("Erro", "Por favor, preencha todos os campos")
+                return
+
+            atendente = collection_atendente.find_one({"username": username, "password": password})
+
+            if atendente:
+                messagebox.showinfo("Sucesso", "Login bem-sucedido!")
+                login_window.destroy()  # Fechar a janela de login
+                root.deiconify()  # Restaurar a janela principal
+            else:
+                messagebox.showerror("Erro", "Nome de usuário ou senha incorretos")
+                # Limpar os campos de entrada
+                username_entry.delete(0, END)
+                password_entry.delete(0, END)
 
     # Botão de login
     login_button = ctk.CTkButton(master=frame_login, text="ENTRAR", command=verificar_login, fg_color=azul, width=300, height=50,font=("Arial Bold",20))
@@ -197,20 +217,12 @@ def finalizar_compra():
     btn_credito.place(x=800, y=350)
 
 # Código e Descrição
-entry_barra_codigo = ctk.CTkEntry(root, width=1370, height=50, placeholder_text="Código/Descrição")
+entry_barra_codigo = ctk.CTkEntry(root, width=1370, height=50, placeholder_text="Código/Descrição",fg_color="white",text_color="grey",font=("Arial Bold",18),border_color=azul)
 entry_barra_codigo.place(x=199, y=200)
 
 # Quantidade
-entry_quantidade = ctk.CTkEntry(root, width=150, height=50, placeholder_text="Quantidade")
+entry_quantidade = ctk.CTkEntry(root, width=150, height=50, placeholder_text="Quantidade",fg_color="white", text_color="grey",border_color=azul,font=("Arial Bold",18))
 entry_quantidade.place(x=199, y=400)
-
-# Valor Unitario
-entry_unitario = ctk.CTkEntry(root, width=150, height=50, placeholder_text="Valor Unitário")
-entry_unitario.place(x=199, y=500)
-
-# Valor Total
-entry_total = ctk.CTkEntry(root, width=150, height=50, placeholder_text="Valor Total")
-entry_total.place(x=199, y=600)
 
 # Definir uma variável global para o contador de itens
 contador_itens = 1
@@ -231,10 +243,10 @@ def pesquisar_produto():
         # Exibir os detalhes do produto no frame
         ctk.CTkLabel(master=frame_right, text="Item", font=("Arial", 18), bg_color=azul, text_color="white").place(x=80, y=30)
         ctk.CTkLabel(master=frame_right, text="ID", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200, y=30)
-        ctk.CTkLabel(master=frame_right, text="Descrição", font=("Arial", 18), bg_color=azul, text_color="white").place(x=420, y=30)
+        ctk.CTkLabel(master=frame_right, text="Descrição", font=("Arial", 18), bg_color=azul, text_color="white").place(x=320, y=30)
         ctk.CTkLabel(master=frame_right, text="Quantidade", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580, y=30)
         ctk.CTkLabel(master=frame_right, text="Valor Unitário", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780, y=30)
-        ctk.CTkLabel(master=frame_right, text="Imposto", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=30)
+        ctk.CTkLabel(master=frame_right, text="Imposto(%)", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=30)
         ctk.CTkLabel(master=frame_right, text="R$", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1070, y=30)
 
         y_coordinate = 0 + contador_itens * 50  # Definir a coordenada y baseada no número de itens já exibidos
@@ -250,7 +262,7 @@ def pesquisar_produto():
         ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['codigo_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200, y=y_coordinate)
 
         #Descrição
-        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['nome_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=420, y=y_coordinate)
+        ctk.CTkLabel(master=frame_right, text=f"{produto_encontrado['nome_produto']}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=320, y=y_coordinate)
 
         #Quantidade
         ctk.CTkLabel(master=frame_right, text=f"{quantidade}", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580, y=y_coordinate)
@@ -293,24 +305,15 @@ btn_pesquisar.place(x=1570, y=200)
 frame_top= ctk.CTkFrame(master=root, width=2000, height=100, fg_color=azul)
 frame_top.place(x=0, y=0)
 
-frame_down = ctk.CTkFrame(master=root, width=500, height=330, fg_color=azul)
+frame_down = ctk.CTkFrame(master=root, width=500, height=330, fg_color="white",border_color=azul,border_width=2)
 frame_down.place(x=0, y=920)
 
-frame_rightdown = ctk.CTkFrame(master=root, width=1000, height=330, fg_color=azul)
+frame_rightdown = ctk.CTkFrame(master=root, width=1000, height=330, fg_color="white",border_color=azul,border_width=2)
 frame_rightdown.place(x=1000, y=920)
 
-frame_right = ctk.CTkFrame(master=root, width=5000, height=400, fg_color=azul)
+frame_right = ctk.CTkFrame(master=root, width=5000, height=400, fg_color="white",border_color=azul,border_width=2)
 frame_right.place(x=500, y=400)
 
-
-#Label Dentro do Frame Right
-ctk.CTkLabel(master=frame_right, text="Item", font=("Arial", 18), bg_color=azul, text_color="white").place(x=80, y=30)
-ctk.CTkLabel(master=frame_right, text="ID", font=("Arial", 18), bg_color=azul, text_color="white").place(x=200, y=30)
-ctk.CTkLabel(master=frame_right, text="Descrição", font=("Arial", 18), bg_color=azul, text_color="white").place(x=320, y=30)
-ctk.CTkLabel(master=frame_right, text="Quantidade", font=("Arial", 18), bg_color=azul, text_color="white").place(x=580, y=30)
-ctk.CTkLabel(master=frame_right, text="Valor Unitário", font=("Arial", 18), bg_color=azul, text_color="white").place(x=780, y=30)
-ctk.CTkLabel(master=frame_right, text="Imposto", font=("Arial", 18), bg_color=azul, text_color="white").place(x=970, y=30)
-ctk.CTkLabel(master=frame_right, text="R$", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1070, y=30)
 
 # Logo
 logo_image = Image.open("./Logo 2.png")
@@ -322,19 +325,13 @@ ctk.CTkLabel(master=frame_top, text=None, image=logo, bg_color=azul).place(x=40,
 ctk.CTkLabel(master=frame_top, text="Suporte (11) 99999-9999", font=("Arial", 18), bg_color=azul, text_color="white").place(x=1600, y=40)
 ctk.CTkLabel(root, text="Você está sendo atendido por: xxxxxxx", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=260)
 ctk.CTkLabel(master=frame_down, text="AVISO", font=("Arial Bold", 30), bg_color=azul, text_color="white").place(x=60, y=50) 
-ctk.CTkLabel(master=frame_rightdown, text="SUB TOTAL", font=("Arial Bold", 30), bg_color=azul, text_color="white").place(x=60, y=50) 
+ctk.CTkLabel(master=frame_rightdown, text="SUB TOTAL", font=("Arial Bold", 30), bg_color="white", text_color="grey").place(x=60, y=50) 
 
 #Código
-ctk.CTkLabel(root, text="Código/Descrição", font=("Arial", 18), bg_color="white", text_color="gray").place(x=199, y=170)
+ctk.CTkLabel(root, text="Código/Descrição", font=("Arial", 22), bg_color="white", text_color="grey").place(x=199, y=170)
 
 #Quantidade
 ctk.CTkLabel(root, text="Quantidade", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=370)
-
-#Valor Unitário
-ctk.CTkLabel(root, text="Valor Unitário", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=470)
-
-#Valor Total
-ctk.CTkLabel(root, text="Valor Total", font=("Arial", 22), bg_color="white", text_color="gray").place(x=199, y=570)
 
 #Caixa Aberto/Cupom Aberto
 ctk.CTkLabel(master=frame_down, text="CAIXA ABERTO", font=("Arial Bold", 30), bg_color=azul, text_color="white").place(x=200, y=50) 
